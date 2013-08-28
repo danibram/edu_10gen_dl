@@ -88,7 +88,7 @@ class EdXBrowser(object):
             for my_course in my_courses:
                 course_url = my_course.a['href']
                 course_name = my_course.h3.text
-                
+
                 if self._config.interactive_mode:
                     launch_download_msg = 'Download the course [%s] from %s? (y/n) ' % (course_name, course_url)
                     launch_download = raw_input(launch_download_msg)
@@ -118,7 +118,7 @@ class EdXBrowser(object):
                     launch_download = raw_input(launch_download_msg)
                     if (launch_download.lower() == "n"):
                         continue
-                
+
                 i += 1
                 print '\t[%02i] %s' % (i, chapter_name)
                 paragraphs = chapter.find('ul').findAll('li')
@@ -138,11 +138,11 @@ class EdXBrowser(object):
             #         + '%02i.%02i.*' % (i,j)
             #fn = glob.glob(DIRECTORY + nametmpl)
             nametmpl = os.path.join(DIRECTORY,
-                                    sanitize_filename(course_name, replace_space_with_underscore),
-                                    sanitize_filename(chapter_name, replace_space_with_underscore),
+                                    sanitize_filename(course_name),
+                                    sanitize_filename(chapter_name),
                                     '%02i.%02i.*' % (i,j))
             fn = glob.glob(nametmpl)
-            
+
             if fn:
                 print "Processing of %s skipped" % nametmpl
                 continue
@@ -167,10 +167,10 @@ class EdXBrowser(object):
                     #        + '%02i.%02i.%02i ' % (i,j,k) \
                     #        + sanitize_filename('%s (%s)' % (par_name, video_type)) + '.%(ext)s'
                     outtmpl = os.path.join(DIRECTORY,
-                        sanitize_filename(course_name, replace_space_with_underscore),
-                        sanitize_filename(chapter_name, replace_space_with_underscore),
+                        sanitize_filename(course_name),
+                        sanitize_filename(chapter_name),
                         '%02i.%02i.%02i ' % (i,j,k) + \
-                        sanitize_filename('%s (%s)' % (par_name, video_type), replace_space_with_underscore) + '.%(ext)s')
+                        sanitize_filename('%s (%s)' % (par_name, video_type)) + '.%(ext)s')
                     self._fd.params['outtmpl'] = outtmpl
                     self._fd.download([video_url])
                 except Exception as e:
